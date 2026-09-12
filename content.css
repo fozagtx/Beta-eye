@@ -1,0 +1,8 @@
+.see-simplified-text {
+  border-inline-start: 4px solid transparent;
+  padding-inline-start: 0.35rem;
+}
+
+.see-show-changes {
+  border-inline-start-color: #2563eb;
+}

@@ -1,0 +1,6 @@
+.aider*
+.env
+.serena/
+dist/
+node_modules/
+coverage/
