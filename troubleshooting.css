@@ -1,5 +1,5 @@
 :root {
-  color-scheme: light dark;
+  color-scheme: light;
   font-family:
     system-ui,
     -apple-system,
@@ -10,8 +10,8 @@
 
 body {
   margin: 0;
-  background: Canvas;
-  color: CanvasText;
+  background: #f6f8fb;
+  color: #17202a;
 }
 
 main {
@@ -28,4 +28,8 @@ dt {
 dd {
   margin-inline-start: 0;
   color: #4b5563;
+}
+
+a {
+  color: #174ea6;
 }

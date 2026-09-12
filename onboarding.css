@@ -1,5 +1,5 @@
 :root {
-  color-scheme: light dark;
+  color-scheme: light;
   font-family:
     system-ui,
     -apple-system,
@@ -10,8 +10,8 @@
 
 body {
   margin: 0;
-  background: Canvas;
-  color: CanvasText;
+  background: #f6f8fb;
+  color: #17202a;
 }
 
 main {
@@ -44,5 +44,5 @@ a:focus-visible {
 a {
   display: inline-block;
   margin-inline-start: 16px;
-  color: CanvasText;
+  color: #174ea6;
 }

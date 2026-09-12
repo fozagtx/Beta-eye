@@ -9,7 +9,7 @@
 }
 
 body {
-  width: 340px;
+  width: min(100%, 420px);
   margin: 0;
   background: #ffffff;
   color: #17202a;
@@ -19,6 +19,12 @@ body {
   display: grid;
   gap: 16px;
   padding: 16px;
+}
+
+@media (min-width: 480px) {
+  .popup {
+    padding: 24px;
+  }
 }
 
 .topbar {
