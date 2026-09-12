@@ -16,8 +16,7 @@
 
   chrome.runtime.onInstalled.addListener(async ({ reason }) => {
     if (reason === "install") {
-      await chrome.storage.local.set({ "redacto:onboarded": false });
-      await chrome.tabs.create({ url: chrome.runtime.getURL("onboarding.html") });
+      await chrome.storage.local.set({ "redacto:onboarded": true });
     }
     await refreshTrustedScripts();
   });

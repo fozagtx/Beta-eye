@@ -35,8 +35,6 @@
       "trustSite",
       "allowSensitive",
       "openOptions",
-      "openOnboarding",
-      "onboardingNotice",
       "progress",
       "progressText",
     ]) {
@@ -69,7 +67,6 @@
       setActionDisabled(true);
       return;
     }
-    if (!nextStatus.onboarded) els.onboardingNotice.hidden = false;
     els.status.textContent = "Ready to redact locally.";
     els.trustSite.textContent = nextStatus.settings.trustedSites.includes(nextStatus.site)
       ? "Trusted site"
@@ -90,9 +87,6 @@
 
   function wireEvents() {
     els.openOptions.addEventListener("click", () => chrome.runtime.openOptionsPage());
-    els.openOnboarding.addEventListener("click", () =>
-      chrome.tabs.create({ url: chrome.runtime.getURL("onboarding.html") }),
-    );
     els.simplify.addEventListener("click", () => sendPageAction("simplify"));
     els.restore.addEventListener("click", () => sendPageAction("restore"));
     els.copyRedacted.addEventListener("click", copyRedacted);
