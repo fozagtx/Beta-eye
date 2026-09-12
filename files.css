@@ -38,15 +38,11 @@ body {
   letter-spacing: 0.14em;
   font-size: 1rem;
 }
-.brand-mark {
-  display: grid;
-  place-items: center;
-  width: 30px;
-  height: 30px;
-  border-radius: 6px;
-  background: #c5ff1a;
-  color: #050505;
-  font-weight: 900;
+.brand-logo {
+  display: block;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
 }
 .privacy-badge {
   display: inline-flex;
