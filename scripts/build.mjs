@@ -10,8 +10,6 @@ const files = [
   "options.html",
   "options.css",
   "options.js",
-  "troubleshooting.html",
-  "troubleshooting.css",
   "content.css",
   "LICENSE",
   "THIRD_PARTY_NOTICES.md",
