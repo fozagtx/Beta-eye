@@ -7,12 +7,17 @@
   let progressTimer = null;
 
   document.addEventListener("DOMContentLoaded", async () => {
-    bindElements();
-    activeTab = await getActiveTab();
-    status = await chrome.runtime.sendMessage({ action: "getStatus", url: activeTab?.url || "" });
-    renderStatus(status);
-    hydrateSettings(status.settings);
-    wireEvents();
+    try {
+      bindElements();
+      activeTab = await getActiveTab();
+      status = await chrome.runtime.sendMessage({ action: "getStatus", url: activeTab?.url || "" });
+      renderStatus(status);
+      hydrateSettings(status.settings);
+      wireEvents();
+    } catch (_error) {
+      els.status.textContent = "Beta-eye could not connect to this page.";
+      setActionDisabled(true);
+    }
   });
 
   function bindElements() {
@@ -110,10 +115,16 @@
 
   async function sendPageAction(action) {
     setBusy(true);
-    await chrome.runtime.sendMessage({ action: "injectContent", tabId: activeTab.id });
-    const response = await chrome.tabs.sendMessage(activeTab.id, { action });
-    els.status.textContent = response.message || (response.ok ? "Done." : "Something went wrong.");
-    setBusy(false);
+    try {
+      const injection = await chrome.runtime.sendMessage({ action: "injectContent", tabId: activeTab.id });
+      if (!injection?.ok) throw new Error(injection?.error || "Could not access this page.");
+      const response = await chrome.tabs.sendMessage(activeTab.id, { action });
+      els.status.textContent = response.message || (response.ok ? "Done." : "Something went wrong.");
+    } catch (_error) {
+      els.status.textContent = "This page cannot be simplified. Try a regular web page.";
+    } finally {
+      setBusy(false);
+    }
   }
 
   async function save(partial) {
