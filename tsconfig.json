@@ -11,5 +11,5 @@
     "skipLibCheck": true
   },
   "include": ["*.js", "lib/**/*.js", "scripts/**/*.mjs", "tests/**/*.js", "types/**/*.d.ts"],
-  "exclude": ["dist", "marked.js"]
+  "exclude": ["dist"]
 }
