@@ -28,6 +28,8 @@ interface Window {
     getSettings(): Promise<BetaEyeSettingsShape>;
     saveSettings(settings: unknown): Promise<BetaEyeSettingsShape>;
     setOnboardingState(onboarded: boolean): Promise<void>;
+    getOpenRouterKey(): Promise<string>;
+    saveOpenRouterKey(key: string): Promise<void>;
     getSiteKey(url: string): string;
   };
 }
