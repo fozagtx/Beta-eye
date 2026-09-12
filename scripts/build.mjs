@@ -7,6 +7,9 @@ const files = [
   "popup.html",
   "popup.css",
   "popup.js",
+  "files.html",
+  "files.css",
+  "files.js",
   "options.html",
   "options.css",
   "options.js",
@@ -25,5 +28,10 @@ for (const file of files) {
 for (const dir of ["lib", "fonts", "images"]) {
   if (existsSync(dir)) await cp(dir, `dist/${dir}`, { recursive: true });
 }
+
+await mkdir("dist/vendor", { recursive: true });
+await cp("node_modules/fflate/esm/browser.js", "dist/vendor/fflate.mjs");
+await cp("node_modules/pdfjs-dist/legacy/build/pdf.min.mjs", "dist/vendor/pdf.mjs");
+await cp("node_modules/pdfjs-dist/legacy/build/pdf.worker.min.mjs", "dist/vendor/pdf.worker.min.mjs");
 
 console.log("Built extension into dist/");

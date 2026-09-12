@@ -26,10 +26,10 @@ export default [
     },
   },
   {
-    files: ["eslint.config.mjs", "scripts/**/*.mjs", "tests/**/*.js"],
+    files: ["eslint.config.mjs", "scripts/**/*.mjs", "tests/**/*.js", "files.js"],
     languageOptions: {
       sourceType: "module",
-      globals: { ...globals.node, ...globals.vitest },
+      globals: { ...globals.node, ...globals.vitest, ...globals.browser, ...globals.webextensions },
     },
   },
 ];

@@ -29,6 +29,7 @@
       "simplify",
       "restore",
       "copyRedacted",
+      "openFiles",
       "speak",
       "cancel",
       "siteToggle",
@@ -90,6 +91,7 @@
     els.simplify.addEventListener("click", () => sendPageAction("simplify"));
     els.restore.addEventListener("click", () => sendPageAction("restore"));
     els.copyRedacted.addEventListener("click", copyRedacted);
+    els.openFiles.addEventListener("click", () => chrome.tabs.create({ url: chrome.runtime.getURL("files.html") }));
     els.speak.addEventListener("click", () => sendPageAction("speak"));
     els.cancel.addEventListener("click", () => sendPageAction("cancel"));
     els.profile.addEventListener("change", () =>

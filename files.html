@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Redacto Files</title>
+    <link rel="stylesheet" href="files.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Redacto Files</h1>
+      <p class="lede">Scan PDFs and Excel files on this device before sharing them with an AI tool.</p>
+      <label class="dropzone" for="files">
+        <strong>Choose PDF or Excel files</strong>
+        <span>Nothing is uploaded automatically.</span>
+        <input id="files" type="file" accept=".pdf,.xlsx,.xls,.csv" multiple />
+      </label>
+      <p id="summary" role="status" aria-live="polite">No files scanned yet.</p>
+      <section id="results" aria-label="Scanned files"></section>
+    </main>
+    <script type="module" src="files.js"></script>
+  </body>
+</html>
