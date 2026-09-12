@@ -2,7 +2,7 @@
 
 ## 2.1.0
 
-- Added onboarding and troubleshooting pages.
+- Added direct file scanning workspace in the side panel.
 - Added progress, cancel, trusted-site auto-run, sensitive-site override, local browser speech, and text-only change highlighting.
 - Expanded capability detection with device memory and storage estimate details.
 

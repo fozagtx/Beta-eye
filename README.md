@@ -42,7 +42,7 @@ npm run format
 
 ## For Developers
 
-- `popup.*`: the Chrome side panel.
+- `files.*`: the Chrome side panel and file scanning workspace.
 - `background.js` and `content.js`: connect the side panel to the current page.
 - `lib/redactor.js`: local detection rules.
 - `lib/chunker.js`: chooses readable page text.

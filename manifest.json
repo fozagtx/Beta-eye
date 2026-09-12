@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Redacto",
-  "version": "3.0.0",
-  "version_name": "3.0.0 local redaction",
+  "version": "3.1.0",
+  "version_name": "3.1.0 file redaction",
   "minimum_chrome_version": "128",
   "description": "Local confidential-data redaction before you share text with any LLM.",
   "icons": {
@@ -12,8 +12,8 @@
   },
   "permissions": ["activeTab", "storage", "scripting", "sidePanel"],
   "optional_host_permissions": ["http://*/*", "https://*/*"],
-  "action": { "default_popup": "popup.html" },
-  "side_panel": { "default_path": "popup.html" },
+  "action": { "default_title": "Open Redacto" },
+  "side_panel": { "default_path": "files.html" },
   "background": { "service_worker": "background.js" },
   "commands": {
     "toggle-redaction": {

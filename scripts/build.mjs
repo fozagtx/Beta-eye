@@ -4,9 +4,6 @@ import { existsSync } from "node:fs";
 const files = [
   "manifest.json",
   "background.js",
-  "popup.html",
-  "popup.css",
-  "popup.js",
   "files.html",
   "files.css",
   "files.js",
