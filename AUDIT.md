@@ -1,4 +1,4 @@
-# Beta-eye v2 Audit
+# Redacto v2 Audit
 
 Date: 2026-09-12
 Branch: `main`

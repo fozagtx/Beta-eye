@@ -3,13 +3,13 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Beta-eye Settings</title>
+    <title>Redacto Settings</title>
     <link rel="stylesheet" href="options.css" />
   </head>
   <body>
     <main>
-      <h1>Beta-eye Settings</h1>
-      <p class="lede">Set global reading defaults. Choose how Beta-eye processes page text.</p>
+      <h1>Redacto Settings</h1>
+      <p class="lede">Choose how Redacto protects text before you share it.</p>
 
       <section aria-labelledby="displayTitle">
         <h2 id="displayTitle">Display</h2>
@@ -39,12 +39,7 @@
       <section aria-labelledby="privacyTitle">
         <h2 id="privacyTitle">Privacy</h2>
         <label
-          ><input id="useOpenRouter" type="checkbox" /> Use OpenRouter free model</label
-        >
-        <label>OpenRouter model <input id="openRouterModel" type="text" value="openrouter/free" /></label>
-        <label>OpenRouter API key <input id="openRouterKey" type="password" autocomplete="off" /></label>
-        <p class="warning">OpenRouter sends selected page text over the internet. Its providers may retain prompts. The key is stored only on this device.</p>
-        <label><input id="useAI" type="checkbox" /> Use Gemini Nano when available</label>
+        <p class="warning">Redacto scans locally. Review the redacted text before pasting it into any LLM.</p>
         <label><input id="ttsEnabled" type="checkbox" /> Enable browser text-to-speech hooks</label>
         <label
           ><input id="autoRunTrustedSites" type="checkbox" /> Auto-run only on trusted sites</label

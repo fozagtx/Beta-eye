@@ -10,10 +10,6 @@
     "letterSpacing",
     "wordSpacing",
     "maxWidth",
-    "useOpenRouter",
-    "openRouterModel",
-    "openRouterKey",
-    "useAI",
     "ttsEnabled",
     "autoRunTrustedSites",
   ];
@@ -24,9 +20,8 @@
       els[id] = document.getElementById(id);
     });
     els.status = document.getElementById("status");
-    const settings = await window.BetaEyeSettings.getSettings();
+    const settings = await window.RedactoSettings.getSettings();
     hydrate(settings);
-    els.openRouterKey.value = await window.BetaEyeSettings.getOpenRouterKey();
     ids.forEach((id) => els[id].addEventListener("input", save));
   });
 
@@ -39,18 +34,12 @@
     els.letterSpacing.value = settings.display.letterSpacing;
     els.wordSpacing.value = settings.display.wordSpacing;
     els.maxWidth.value = settings.display.maxWidth;
-    els.useOpenRouter.checked = settings.useOpenRouter;
-    els.openRouterModel.value = settings.openRouterModel;
-    els.useAI.checked = settings.useAI;
     els.ttsEnabled.checked = settings.display.ttsEnabled;
     els.autoRunTrustedSites.checked = settings.autoRunTrustedSites;
   }
 
   async function save() {
-    await window.BetaEyeSettings.saveSettings({
-      useAI: els.useAI.checked,
-      useOpenRouter: els.useOpenRouter.checked,
-      openRouterModel: els.openRouterModel.value.trim() || "openrouter/free",
+    await window.RedactoSettings.saveSettings({
       autoRunTrustedSites: els.autoRunTrustedSites.checked,
       display: {
         openDyslexic: els.openDyslexic.checked,
@@ -64,7 +53,6 @@
         maxWidth: Number(els.maxWidth.value),
       },
     });
-    await window.BetaEyeSettings.saveOpenRouterKey(els.openRouterKey.value);
     els.status.textContent = "Settings saved.";
   }
 })();

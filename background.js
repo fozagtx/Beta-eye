@@ -1,13 +1,11 @@
 (function () {
   "use strict";
 
-  importScripts("lib/settings.js", "lib/capability.js", "lib/prompt-library.js");
+  importScripts("lib/settings.js");
 
   const CONTENT_FILES = [
     "lib/settings.js",
-    "lib/capability.js",
-    "lib/prompt-library.js",
-    "lib/rules-fallback.js",
+    "lib/redactor.js",
     "lib/chunker.js",
     "lib/sanitizer.js",
     "lib/cache.js",
@@ -18,13 +16,20 @@
 
   chrome.runtime.onInstalled.addListener(async ({ reason }) => {
     if (reason === "install") {
-      await chrome.storage.local.set({ "beta-eye:onboarded": false });
+      await chrome.storage.local.set({ "redacto:onboarded": false });
       await chrome.tabs.create({ url: chrome.runtime.getURL("onboarding.html") });
     }
     await refreshTrustedScripts();
   });
 
   chrome.runtime.onStartup.addListener(refreshTrustedScripts);
+
+  chrome.runtime.onInstalled.addListener(() => {
+    chrome.sidePanel?.setPanelBehavior({ openPanelOnActionClick: true }).catch(() => undefined);
+  });
+  chrome.runtime.onStartup.addListener(() => {
+    chrome.sidePanel?.setPanelBehavior({ openPanelOnActionClick: true }).catch(() => undefined);
+  });
 
   chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     (async () => {
@@ -37,7 +42,7 @@
         sendResponse({ ok: true });
       }
       if (request.action === "saveSettings") {
-        const settings = await globalThis.BetaEyeSettings.saveSettings(request.settings);
+        const settings = await globalThis.RedactoSettings.saveSettings(request.settings);
         if ("autoRunTrustedSites" in request.settings || "trustedSites" in request.settings) {
           await refreshTrustedScripts();
         }
@@ -46,28 +51,25 @@
       if (request.action === "requestTrustedSite" && request.origin && request.site) {
         const granted = await chrome.permissions.request({ origins: [`${request.origin}/*`] });
         if (granted) {
-          const settings = await globalThis.BetaEyeSettings.getSettings();
+          const settings = await globalThis.RedactoSettings.getSettings();
           const trustedSites = Array.from(new Set([...settings.trustedSites, request.site]));
-          await globalThis.BetaEyeSettings.saveSettings({ trustedSites });
+          await globalThis.RedactoSettings.saveSettings({ trustedSites });
           await refreshTrustedScripts();
           sendResponse({
             ok: true,
             granted,
-            settings: await globalThis.BetaEyeSettings.getSettings(),
+            settings: await globalThis.RedactoSettings.getSettings(),
           });
           return;
         }
         sendResponse({ ok: true, granted: false });
-      }
-      if (request.action === "openRouterSimplify" && typeof request.text === "string") {
-        sendResponse(await simplifyWithOpenRouter(request.text, request.settings || {}));
       }
     })().catch((error) => sendResponse({ ok: false, error: error.message }));
     return true;
   });
 
   chrome.commands.onCommand.addListener(async (command, tab) => {
-    if (command !== "toggle-simplification" || !tab?.id || !isHttpUrl(tab.url)) return;
+    if (command !== "toggle-redaction" || !tab?.id || !isHttpUrl(tab.url)) return;
     await ensureContent(tab.id);
     chrome.tabs.sendMessage(tab.id, { action: "toggleSimplification" });
   });
@@ -79,11 +81,11 @@
 
   async function refreshTrustedScripts() {
     await chrome.scripting.unregisterContentScripts().catch(() => undefined);
-    const settings = await globalThis.BetaEyeSettings.getSettings();
+    const settings = await globalThis.RedactoSettings.getSettings();
     if (!settings.autoRunTrustedSites || !settings.trustedSites.length) return;
     await chrome.scripting.registerContentScripts([
       {
-        id: "beta-eye-trusted-auto-run",
+        id: "redacto-trusted-auto-run",
         matches: settings.trustedSites.map((site) => `*://${site}/*`),
         js: CONTENT_FILES,
         css: ["content.css"],
@@ -94,48 +96,24 @@
   }
 
   async function getStatus(url) {
-    const capability = await globalThis.BetaEyeCapability.detect();
-    const settings = await globalThis.BetaEyeSettings.getSettings();
-    const site = globalThis.BetaEyeSettings.getSiteKey(url || "");
+    const settings = await globalThis.RedactoSettings.getSettings();
+    const site = globalThis.RedactoSettings.getSiteKey(url || "");
     const siteDisabled = Boolean(site && settings.disabledSites.includes(site));
     const sensitive =
-      globalThis.BetaEyeSettings.isSensitiveUrl(url || "") &&
+      globalThis.RedactoSettings.isSensitiveUrl(url || "") &&
       !settings.allowedSensitiveSites.includes(site);
-    const onboarded = await globalThis.BetaEyeSettings.getOnboardingState();
-    return { ok: true, capability, site, siteDisabled, sensitive, settings, onboarded };
+    const onboarded = await globalThis.RedactoSettings.getOnboardingState();
+    return {
+      ok: true,
+      capability: { state: "ready", message: "Ready to redact locally." },
+      site,
+      siteDisabled,
+      sensitive,
+      settings,
+      onboarded,
+    };
   }
 
-  async function simplifyWithOpenRouter(text, settings) {
-    const key = await globalThis.BetaEyeSettings.getOpenRouterKey();
-    if (!key) return { ok: false, error: "OpenRouter API key is not configured." };
-    const prompt = buildOpenRouterPrompt(settings, text);
-    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${key}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        model: settings.openRouterModel || "openrouter/free",
-        messages: [
-          { role: "system", content: prompt.system },
-          { role: "user", content: prompt.user },
-        ],
-        temperature: 0.1,
-        max_tokens: 1200,
-      }),
-    });
-    if (!response.ok) return { ok: false, error: `OpenRouter request failed (${response.status}).` };
-    const data = await response.json();
-    const content = data.choices?.[0]?.message?.content;
-    if (typeof content !== "string") return { ok: false, error: "OpenRouter returned no text." };
-    const parsed = globalThis.BetaEyePromptLibrary.parseAiResponse(content);
-    return parsed ? { ok: true, text: parsed } : { ok: false, error: "OpenRouter returned invalid text." };
-  }
-
-  function buildOpenRouterPrompt(settings, text) {
-    return globalThis.BetaEyePromptLibrary.buildPrompt(settings, text);
-  }
 
   function isHttpUrl(url) {
     return /^https?:\/\//.test(url || "");

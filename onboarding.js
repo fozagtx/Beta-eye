@@ -2,7 +2,7 @@
   "use strict";
 
   document.getElementById("finish").addEventListener("click", async () => {
-    await window.BetaEyeSettings.setOnboardingState(true);
+    await window.RedactoSettings.setOnboardingState(true);
     window.close();
   });
 })();

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Beta-eye</title>
+    <title>Redacto</title>
     <link rel="stylesheet" href="popup.css" />
   </head>
   <body>
@@ -11,7 +11,7 @@
       <header class="topbar">
         <img src="images/icon48.png" alt="" width="32" height="32" />
         <div>
-          <h1 id="title">Beta-eye</h1>
+          <h1 id="title">Redacto</h1>
           <p id="status" role="status">Checking page...</p>
         </div>
         <button id="openOptions" class="icon-button" type="button" aria-label="Open settings">
@@ -21,7 +21,7 @@
 
       <section id="onboardingNotice" class="notice" hidden>
         <h2>First run</h2>
-        <p>Beta-eye works locally and falls back safely when Gemini Nano is not ready.</p>
+        <p>Redacto finds confidential data locally before you share text with an LLM.</p>
         <button id="openOnboarding" type="button" class="secondary">Review setup</button>
       </section>
 
@@ -38,8 +38,8 @@
       </section>
 
       <section aria-labelledby="levelTitle">
-        <h2 id="levelTitle">Simplification</h2>
-        <div class="segmented" role="radiogroup" aria-label="Simplification level">
+        <h2 id="levelTitle">Detection sensitivity</h2>
+        <div class="segmented" role="radiogroup" aria-label="Redaction sensitivity">
           <button type="button" data-level="1" role="radio">Low</button>
           <button type="button" data-level="3" role="radio">Medium</button>
           <button type="button" data-level="5" role="radio">High</button>
@@ -59,10 +59,10 @@
       <p id="progressText" class="privacy" aria-live="polite"></p>
 
       <div class="actions">
-        <button id="simplify" type="button">Simplify page</button>
+        <button id="simplify" type="button">Redact page</button>
         <button id="restore" type="button" class="secondary">Restore original</button>
       </div>
-      <button id="speak" type="button" class="secondary">Speak simplified text</button>
+      <button id="speak" type="button" class="secondary">Speak redacted text</button>
       <button id="cancel" type="button" class="secondary" hidden>Cancel</button>
 
       <button id="siteToggle" type="button" class="link-button">Disable this site</button>
@@ -73,7 +73,7 @@
       <a class="help-link" href="troubleshooting.html" target="_blank" rel="noreferrer"
         >Troubleshooting</a
       >
-      <p class="privacy">Local only. No telemetry. No external simplification calls.</p>
+      <p class="privacy">Local only. No telemetry. Nothing is uploaded.</p>
     </main>
     <script src="lib/settings.js"></script>
     <script src="popup.js"></script>

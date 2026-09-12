@@ -8,7 +8,7 @@
 
 ## 2.0.0
 
-- Renamed extension to Beta-eye.
+- Renamed extension to Redacto.
 - Removed default all-sites content-script injection.
 - Added rules fallback for unsupported Prompt API states.
 - Added reversible text-only rendering.

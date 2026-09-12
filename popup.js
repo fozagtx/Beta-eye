@@ -15,7 +15,7 @@
       hydrateSettings(status.settings);
       wireEvents();
     } catch (_error) {
-      els.status.textContent = "Beta-eye could not connect to this page.";
+      els.status.textContent = "Redacto could not connect to this page.";
       setActionDisabled(true);
     }
   });
@@ -51,7 +51,7 @@
 
   function renderStatus(nextStatus) {
     if (!activeTab || !/^https?:\/\//.test(activeTab.url || "")) {
-      els.status.textContent = "Open a web page to use Beta-eye.";
+      els.status.textContent = "Open a web page to use Redacto.";
       setActionDisabled(true);
       return;
     }
@@ -69,7 +69,7 @@
       return;
     }
     if (!nextStatus.onboarded) els.onboardingNotice.hidden = false;
-    els.status.textContent = nextStatus.capability.message;
+    els.status.textContent = "Ready to redact locally.";
     els.trustSite.textContent = nextStatus.settings.trustedSites.includes(nextStatus.site)
       ? "Trusted site"
       : "Trust this site";
@@ -121,7 +121,7 @@
       const response = await chrome.tabs.sendMessage(activeTab.id, { action });
       els.status.textContent = response.message || (response.ok ? "Done." : "Something went wrong.");
     } catch (_error) {
-      els.status.textContent = "This page cannot be simplified. Try a regular web page.";
+      els.status.textContent = "This page cannot be scanned. Try a regular web page.";
     } finally {
       setBusy(false);
     }
@@ -191,8 +191,8 @@
   function startProgressPolling() {
     els.progress.hidden = false;
     progressTimer = setInterval(async () => {
-      const data = await chrome.storage.session.get(["beta-eye:progress"]);
-      const progress = data["beta-eye:progress"];
+      const data = await chrome.storage.session.get(["redacto:progress"]);
+      const progress = data["redacto:progress"];
       if (!progress) return;
       els.progress.max = progress.total || 1;
       els.progress.value = progress.done || 0;

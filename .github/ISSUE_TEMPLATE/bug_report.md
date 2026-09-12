@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Report a problem with Beta-eye
+about: Report a problem with Redacto
 ---
 
 ## What happened?

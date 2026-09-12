@@ -1,6 +1,6 @@
 # Security Policy
 
-Beta-eye is designed for local-only text simplification. Please report security issues privately to the project maintainer.
+Redacto is designed for local-only confidential-data redaction. Please report security issues privately to the project maintainer.
 
 Security-sensitive areas:
 

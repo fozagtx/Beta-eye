@@ -1,23 +1,24 @@
 {
   "manifest_version": 3,
-  "name": "Beta-eye",
-  "version": "2.1.0",
-  "version_name": "2.1.0 privacy-first",
+  "name": "Redacto",
+  "version": "3.0.0",
+  "version_name": "3.0.0 local redaction",
   "minimum_chrome_version": "128",
-  "description": "Private, offline-first web text simplification with accessible display controls.",
+  "description": "Local confidential-data redaction before you share text with any LLM.",
   "icons": {
     "16": "images/icon16.png",
     "48": "images/icon48.png",
     "128": "images/icon128.png"
   },
-  "permissions": ["activeTab", "storage", "scripting"],
+  "permissions": ["activeTab", "storage", "scripting", "sidePanel"],
   "optional_host_permissions": ["http://*/*", "https://*/*"],
   "action": { "default_popup": "popup.html" },
+  "side_panel": { "default_path": "popup.html" },
   "background": { "service_worker": "background.js" },
   "commands": {
-    "toggle-simplification": {
+    "toggle-redaction": {
       "suggested_key": { "default": "Alt+Shift+S", "mac": "Alt+Shift+S" },
-      "description": "Toggle original and simplified text on the current page"
+      "description": "Toggle redacted and original text on the current page"
     }
   },
   "web_accessible_resources": [
@@ -28,7 +29,7 @@
   ],
   "options_page": "options.html",
   "content_security_policy": {
-    "extension_pages": "script-src 'self'; connect-src https://openrouter.ai; object-src 'none'; base-uri 'none'; frame-ancestors 'none'"
+    "extension_pages": "script-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'"
   },
   "incognito": "split"
 }

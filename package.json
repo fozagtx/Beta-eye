@@ -1,8 +1,8 @@
 {
-  "name": "beta-eye",
-  "version": "2.1.0",
+  "name": "redacto",
+  "version": "3.0.0",
   "private": true,
-  "description": "Private, offline-first Chrome MV3 text simplification extension.",
+  "description": "Local confidential-data redaction before sharing text with any LLM.",
   "scripts": {
     "dev": "npm run build",
     "build": "node scripts/build.mjs",

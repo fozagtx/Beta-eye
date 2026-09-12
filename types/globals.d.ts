@@ -1,6 +1,6 @@
 declare function importScripts(...urls: string[]): void;
 
-interface BetaEyeSettingsShape {
+interface RedactoSettingsShape {
   autoRunTrustedSites: boolean;
   trustedSites: string[];
   allowedSensitiveSites: string[];
@@ -14,22 +14,20 @@ interface Navigator {
 
 interface Window {
   __betaEyeContentLoaded?: boolean;
-  BetaEyeEngine: {
+  RedactoEngine: {
     simplifyPage(): Promise<{ ok: boolean; state: string; message: string }>;
     restorePage(): { ok: boolean; state: string; message: string };
     speakSimplifiedText(): { ok: boolean; state: string; message: string };
     cancel(): void;
   };
-  BetaEyeRenderer: {
+  RedactoRenderer: {
     state: { simplified: boolean };
     applyDisplay(settings: unknown): void;
   };
-  BetaEyeSettings: {
-    getSettings(): Promise<BetaEyeSettingsShape>;
-    saveSettings(settings: unknown): Promise<BetaEyeSettingsShape>;
+  RedactoSettings: {
+    getSettings(): Promise<RedactoSettingsShape>;
+    saveSettings(settings: unknown): Promise<RedactoSettingsShape>;
     setOnboardingState(onboarded: boolean): Promise<void>;
-    getOpenRouterKey(): Promise<string>;
-    saveOpenRouterKey(key: string): Promise<void>;
     getSiteKey(url: string): string;
   };
 }

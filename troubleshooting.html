@@ -3,36 +3,35 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Beta-eye Troubleshooting</title>
+    <title>Redacto Troubleshooting</title>
     <link rel="stylesheet" href="troubleshooting.css" />
   </head>
   <body>
     <main>
-      <h1>Troubleshooting Beta-eye</h1>
+      <h1>Troubleshooting Redacto</h1>
       <section>
         <h2>Status Meanings</h2>
         <dl>
           <dt>Ready</dt>
-          <dd>Gemini Nano is available locally.</dd>
+          <dd>Redacto is ready to scan locally.</dd>
           <dt>Downloading</dt>
-          <dd>Chrome reports that the local model still needs download or setup.</dd>
+          <dd>Redacto is scanning the page for confidential values.</dd>
           <dt>Fallback active</dt>
-          <dd>Beta-eye is using deterministic local rules instead of the Prompt API.</dd>
+          <dd>Redacto uses deterministic local detection on every device.</dd>
           <dt>Site disabled</dt>
-          <dd>This host is disabled in your Beta-eye settings.</dd>
+          <dd>This host is disabled in your Redacto settings.</dd>
           <dt>Sensitive site skipped</dt>
           <dd>
-            Beta-eye avoids banking, health, government, email, docs editor, and code repository sites by
+            Redacto avoids banking, health, government, email, docs editor, and code repository sites by
             default.
           </dd>
         </dl>
       </section>
       <section>
-        <h2>Model Requirements</h2>
+        <h2>Detection Limits</h2>
         <p>
-          Prompt API support depends on Chrome version, channel, flags, policy, disk space, memory,
-          and model download state. Beta-eye continues to work in rules fallback mode when those
-          requirements are not met.
+          Detection covers common emails, phones, payment cards, government identifiers, tokens,
+          and API keys. It cannot identify every confidential value, so always review the result.
         </p>
       </section>
       <section>

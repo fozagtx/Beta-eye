@@ -1,29 +1,28 @@
-# Beta-eye
+# Redacto
 
-Beta-eye is a Chrome MV3 accessibility extension for web text simplification and display customization.
+Redacto is a Chrome MV3 extension that finds confidential data locally before you share text with any LLM.
 
-Beta-eye can use the OpenRouter free model when configured, Gemini Nano locally when available, or deterministic rules mode on any device.
+Redacto never uploads page text. It scans locally, replaces detected confidential values with clear markers, and keeps the original page restorable.
 
 ## Current Features
 
 - User-action script injection with `activeTab`.
 - Optional trusted-site auto-run after user-approved host permission.
-- OpenRouter free-model adapter with local rules fallback.
-- Optional Gemini Nano adapter when Chrome provides it.
-- Reversible simplification: original text is kept in memory and can be restored.
+- Local detection for emails, phone numbers, payment cards, government identifiers, tokens, and common API keys.
+- Reversible redaction: original text is kept in memory and can be restored.
 - Sensitive-site exclusions for banking, health, government, email, docs editors, and code repos.
 - Profiles for cognitive load, dyslexia, focus, low vision, ESL, and custom use.
 - OpenDyslexic, theme, spacing, reading-width, focus-ruler, paragraph pacing, and browser speech controls.
 - First-run onboarding and troubleshooting pages.
-- Progress and cancel controls for page simplification.
+- Progress and cancel controls for page scanning.
 - Safe text-only change highlighting.
 - Versioned prompt builder and cache keys.
 
 ## Privacy Model
 
-Rules mode and Gemini Nano process text locally. OpenRouter mode sends selected page text to OpenRouter and its selected providers. The OpenRouter key is stored in Chrome local storage and is never synced. Beta-eye does not collect telemetry or log prompts and page content itself.
+Redacto processes page text locally. It does not send page content to a server, store API keys, or collect telemetry. You review the redacted result and choose what to paste into an LLM yourself.
 
-OpenRouter free models can be rate-limited or unavailable. Chrome's Prompt API and Gemini Nano availability depend on the user's browser channel, flags, model download state, hardware, and Chrome policy. If a configured AI provider is unavailable, Beta-eye falls back to rules mode.
+Detection is deterministic and conservative. No automated detector can identify every confidential value, so review the redacted text before sharing it.
 
 ## Install For Local Testing
 
@@ -33,7 +32,7 @@ OpenRouter free models can be rate-limited or unavailable. Chrome's Prompt API a
 4. Enable Developer mode.
 5. Choose Load unpacked and select `dist/`.
 
-For Gemini Nano testing, use a Chrome version/channel that supports the Prompt API and enable the required Chrome flags. Beta-eye still works in fallback mode without the model.
+Redacto does not require a model download, Chrome flags, or a network connection.
 
 ## Development
 
@@ -47,37 +46,35 @@ npm run format
 
 ## Architecture
 
-- `popup.*`: status, profile, simplify, restore, and per-site disable controls.
+- `popup.*`: side-panel status, scan, restore, and per-site disable controls.
 - `options.*`: global display and privacy defaults.
 - `background.js`: active-tab injection, command handling, status lookup, settings save.
 - `content.js`: page message bridge.
 - `lib/settings.js`: settings schema, migrations, sensitive-site rules.
-- `lib/capability.js`: Prompt API and fallback status detection.
-- `lib/prompt-library.js`: versioned Prompt API prompt builder.
-- `lib/rules-fallback.js`: deterministic offline simplifier.
+- `lib/redactor.js`: deterministic local confidential-data detector.
 - `lib/chunker.js`: readable-text selector and skip logic.
 - `lib/renderer.js`: text-only rendering and restore mapping.
 - `lib/cache.js`: ephemeral simplification cache.
 
 ## Testing
 
-Unit tests cover fallback preservation, prompt output parsing, chunk filtering, sanitizer behavior, settings migration, sensitive-site matching, and capability parsing.
+Unit tests cover confidential-data detection, chunk filtering, sanitizer behavior, and settings migration.
 
 Manual smoke tests:
 
 1. Load `dist/` as an unpacked extension.
-2. Open a normal article page and click Simplify page.
-3. Confirm fallback mode works when Prompt API is unavailable.
+2. Open a normal article page and click Redact page.
+3. Confirm detected emails, phone numbers, cards, and tokens are replaced locally.
 4. Click Restore original and confirm original text returns.
-5. Disable the site and confirm simplification controls are blocked.
-6. Change options and confirm display settings apply on the next simplification.
-7. Trust a site and enable auto-run only if you want persistent simplification on that host.
+5. Disable the site and confirm redaction controls are blocked.
+6. Change options and confirm display settings apply on the next scan.
+7. Trust a site and enable auto-run only if you want persistent scanning on that host.
 
 ## Known Limitations
 
 - Restore state is in-memory for the current page session.
-- The fallback mode is deterministic and conservative; it is not as fluent as an available local model.
-- AI responses are rendered as plain text only in this pass.
+- Detection is deterministic and conservative; it cannot identify every confidential value.
+- Always review the redacted text before sharing it with an LLM.
 - Browser speech uses the local browser speech engine and is capped to the first 4000 characters.
 
 ## Release Process
