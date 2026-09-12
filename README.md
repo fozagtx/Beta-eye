@@ -4,13 +4,15 @@ Redacto finds private information in text before you share it with an AI tool.
 
 It works on your device. It replaces things like email addresses, phone numbers, card numbers, and access keys with clear markers. You can review the result, copy it, and paste it into any AI tool yourself.
 
+![Redacto side panel](docs/redacto-side-panel-reference.png)
+
 ## What It Does
 
-- Scans readable text on the current page.
+- Scans text files, PDFs, and Excel files.
 - Finds common private information locally.
-- Shows redacted text without destroying the original.
-- Lets you restore the original page at any time.
-- Copies only the redacted text for you to review and share.
+- Shows the number of private values found in each file.
+- Shows a redacted preview without destroying the original file.
+- Creates downloadable redacted copies for review.
 - Skips banking, health, email, government, document editor, and code sites by default.
 - Includes readable fonts, contrast, spacing, focus, and speech settings.
 

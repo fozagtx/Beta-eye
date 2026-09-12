@@ -292,3 +292,40 @@ pre {
     min-width: 0;
   }
 }
+
+@media (max-width: 420px) {
+  .app {
+    padding: 20px 14px 36px;
+  }
+  .privacy-badge {
+    font-size: 0.67rem;
+  }
+  h1 {
+    font-size: 2.7rem;
+  }
+  .empty-state,
+  .results-state {
+    margin-top: 42px;
+  }
+  .dropzone {
+    min-height: 230px;
+    padding: 42px 14px;
+  }
+  .toolbar button {
+    width: 100%;
+  }
+  .document-panel {
+    padding: 16px;
+  }
+  .panel-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .file-item {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .file-item button {
+    width: 100%;
+  }
+}
