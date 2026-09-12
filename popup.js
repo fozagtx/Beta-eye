@@ -28,6 +28,7 @@
       "autoRunTrustedSites",
       "simplify",
       "restore",
+      "copyRedacted",
       "speak",
       "cancel",
       "siteToggle",
@@ -94,6 +95,7 @@
     );
     els.simplify.addEventListener("click", () => sendPageAction("simplify"));
     els.restore.addEventListener("click", () => sendPageAction("restore"));
+    els.copyRedacted.addEventListener("click", copyRedacted);
     els.speak.addEventListener("click", () => sendPageAction("speak"));
     els.cancel.addEventListener("click", () => sendPageAction("cancel"));
     els.profile.addEventListener("change", () =>
@@ -124,6 +126,22 @@
       els.status.textContent = "This page cannot be scanned. Try a regular web page.";
     } finally {
       setBusy(false);
+    }
+  }
+
+  async function copyRedacted() {
+    try {
+      const injection = await chrome.runtime.sendMessage({ action: "injectContent", tabId: activeTab.id });
+      if (!injection?.ok) throw new Error(injection?.error || "Could not access this page.");
+      const response = await chrome.tabs.sendMessage(activeTab.id, { action: "getRedactedText" });
+      if (!response?.ok || !response.text) {
+        els.status.textContent = "Redact the page before copying its text.";
+        return;
+      }
+      await navigator.clipboard.writeText(response.text);
+      els.status.textContent = "Redacted text copied. Review it before sharing.";
+    } catch (_error) {
+      els.status.textContent = "Could not copy redacted text from this page.";
     }
   }
 
@@ -177,6 +195,7 @@
   function setBusy(busy) {
     els.simplify.disabled = busy;
     els.restore.disabled = busy;
+    els.copyRedacted.disabled = busy;
     els.cancel.hidden = !busy;
     if (busy) els.status.textContent = "Working locally...";
     if (busy) startProgressPolling();
@@ -186,6 +205,7 @@
   function setActionDisabled(disabled) {
     els.simplify.disabled = disabled;
     els.restore.disabled = disabled;
+    els.copyRedacted.disabled = disabled;
   }
 
   function startProgressPolling() {

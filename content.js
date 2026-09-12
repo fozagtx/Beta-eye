@@ -14,6 +14,10 @@
         sendResponse(window.RedactoEngine.restorePage());
         return;
       }
+      if (request.action === "getRedactedText") {
+        sendResponse(window.RedactoEngine.getRedactedText());
+        return;
+      }
       if (request.action === "cancel") {
         window.RedactoEngine.cancel();
         sendResponse({ ok: true, state: "cancelled", message: "Cancellation requested." });

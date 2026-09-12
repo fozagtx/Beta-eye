@@ -18,6 +18,7 @@ interface Window {
     simplifyPage(): Promise<{ ok: boolean; state: string; message: string }>;
     restorePage(): { ok: boolean; state: string; message: string };
     speakSimplifiedText(): { ok: boolean; state: string; message: string };
+    getRedactedText(): { ok: boolean; text?: string; state?: string; message?: string };
     cancel(): void;
   };
   RedactoRenderer: {
