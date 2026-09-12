@@ -30,6 +30,13 @@ p {
   color: #4b5563;
 }
 
+.warning {
+  border-left: 4px solid #b42318;
+  padding: 10px 12px;
+  background: #fff4f2;
+  color: #7a271a;
+}
+
 section {
   display: grid;
   gap: 14px;

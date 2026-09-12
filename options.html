@@ -9,7 +9,7 @@
   <body>
     <main>
       <h1>Beta-eye Settings</h1>
-      <p class="lede">Set global reading defaults. Simplification stays local to your browser.</p>
+      <p class="lede">Set global reading defaults. Choose how Beta-eye processes page text.</p>
 
       <section aria-labelledby="displayTitle">
         <h2 id="displayTitle">Display</h2>
@@ -39,8 +39,12 @@
       <section aria-labelledby="privacyTitle">
         <h2 id="privacyTitle">Privacy</h2>
         <label
-          ><input id="useAI" type="checkbox" /> Use Gemini Nano Prompt API when available</label
+          ><input id="useOpenRouter" type="checkbox" /> Use OpenRouter free model</label
         >
+        <label>OpenRouter model <input id="openRouterModel" type="text" value="openrouter/free" /></label>
+        <label>OpenRouter API key <input id="openRouterKey" type="password" autocomplete="off" /></label>
+        <p class="warning">OpenRouter sends selected page text over the internet. Its providers may retain prompts. The key is stored only on this device.</p>
+        <label><input id="useAI" type="checkbox" /> Use Gemini Nano when available</label>
         <label><input id="ttsEnabled" type="checkbox" /> Enable browser text-to-speech hooks</label>
         <label
           ><input id="autoRunTrustedSites" type="checkbox" /> Auto-run only on trusted sites</label

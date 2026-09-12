@@ -28,7 +28,7 @@
   ],
   "options_page": "options.html",
   "content_security_policy": {
-    "extension_pages": "script-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'"
+    "extension_pages": "script-src 'self'; connect-src https://openrouter.ai; object-src 'none'; base-uri 'none'; frame-ancestors 'none'"
   },
   "incognito": "split"
 }

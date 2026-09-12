@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  importScripts("lib/settings.js", "lib/capability.js");
+  importScripts("lib/settings.js", "lib/capability.js", "lib/prompt-library.js");
 
   const CONTENT_FILES = [
     "lib/settings.js",
@@ -59,6 +59,9 @@
         }
         sendResponse({ ok: true, granted: false });
       }
+      if (request.action === "openRouterSimplify" && typeof request.text === "string") {
+        sendResponse(await simplifyWithOpenRouter(request.text, request.settings || {}));
+      }
     })().catch((error) => sendResponse({ ok: false, error: error.message }));
     return true;
   });
@@ -100,6 +103,38 @@
       !settings.allowedSensitiveSites.includes(site);
     const onboarded = await globalThis.BetaEyeSettings.getOnboardingState();
     return { ok: true, capability, site, siteDisabled, sensitive, settings, onboarded };
+  }
+
+  async function simplifyWithOpenRouter(text, settings) {
+    const key = await globalThis.BetaEyeSettings.getOpenRouterKey();
+    if (!key) return { ok: false, error: "OpenRouter API key is not configured." };
+    const prompt = buildOpenRouterPrompt(settings, text);
+    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${key}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: settings.openRouterModel || "openrouter/free",
+        messages: [
+          { role: "system", content: prompt.system },
+          { role: "user", content: prompt.user },
+        ],
+        temperature: 0.1,
+        max_tokens: 1200,
+      }),
+    });
+    if (!response.ok) return { ok: false, error: `OpenRouter request failed (${response.status}).` };
+    const data = await response.json();
+    const content = data.choices?.[0]?.message?.content;
+    if (typeof content !== "string") return { ok: false, error: "OpenRouter returned no text." };
+    const parsed = globalThis.BetaEyePromptLibrary.parseAiResponse(content);
+    return parsed ? { ok: true, text: parsed } : { ok: false, error: "OpenRouter returned invalid text." };
+  }
+
+  function buildOpenRouterPrompt(settings, text) {
+    return globalThis.BetaEyePromptLibrary.buildPrompt(settings, text);
   }
 
   function isHttpUrl(url) {

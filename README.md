@@ -1,14 +1,15 @@
 # Beta-eye
 
-Beta-eye is a Chrome MV3 accessibility extension for private, offline-first web text simplification and display customization.
+Beta-eye is a Chrome MV3 accessibility extension for web text simplification and display customization.
 
-The v2 direction is conservative: no external simplification calls, no API keys, no telemetry by default, and no page-content logging. When Chrome's Gemini Nano Prompt API is ready, Beta-eye can use it locally. When it is unavailable, Beta-eye uses a deterministic rules fallback.
+Beta-eye can use the OpenRouter free model when configured, Gemini Nano locally when available, or deterministic rules mode on any device.
 
 ## Current Features
 
 - User-action script injection with `activeTab`.
 - Optional trusted-site auto-run after user-approved host permission.
-- Local Gemini Nano Prompt API adapter with rules fallback.
+- OpenRouter free-model adapter with local rules fallback.
+- Optional Gemini Nano adapter when Chrome provides it.
 - Reversible simplification: original text is kept in memory and can be restored.
 - Sensitive-site exclusions for banking, health, government, email, docs editors, and code repos.
 - Profiles for cognitive load, dyslexia, focus, low vision, ESL, and custom use.
@@ -20,9 +21,9 @@ The v2 direction is conservative: no external simplification calls, no API keys,
 
 ## Privacy Model
 
-Beta-eye processes text locally in the browser. It does not send page content to a server, does not include API keys, and does not collect telemetry. The extension avoids logging prompts and page content.
+Rules mode and Gemini Nano process text locally. OpenRouter mode sends selected page text to OpenRouter and its selected providers. The OpenRouter key is stored in Chrome local storage and is never synced. Beta-eye does not collect telemetry or log prompts and page content itself.
 
-Chrome's Prompt API and Gemini Nano availability depend on the user's browser channel, flags, model download state, hardware, and Chrome policy. If the local model is unavailable, Beta-eye falls back to rules mode.
+OpenRouter free models can be rate-limited or unavailable. Chrome's Prompt API and Gemini Nano availability depend on the user's browser channel, flags, model download state, hardware, and Chrome policy. If a configured AI provider is unavailable, Beta-eye falls back to rules mode.
 
 ## Install For Local Testing
 
