@@ -6,4 +6,4 @@ Bundled font files in `fonts/` are from OpenDyslexic. OpenDyslexic is commonly d
 
 ## Removed Runtime Dependencies
 
-See v2 renders simplification output as text only and does not load a Markdown parser at runtime.
+Beta-eye v2 renders simplification output as text only and does not load a Markdown parser at runtime.

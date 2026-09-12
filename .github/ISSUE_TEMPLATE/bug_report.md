@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Report a problem with See
+about: Report a problem with Beta-eye
 ---
 
 ## What happened?

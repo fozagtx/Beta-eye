@@ -21,7 +21,7 @@
       els[id] = document.getElementById(id);
     });
     els.status = document.getElementById("status");
-    const settings = await window.SeeSettings.getSettings();
+    const settings = await window.BetaEyeSettings.getSettings();
     hydrate(settings);
     ids.forEach((id) => els[id].addEventListener("input", save));
   });
@@ -41,7 +41,7 @@
   }
 
   async function save() {
-    await window.SeeSettings.saveSettings({
+    await window.BetaEyeSettings.saveSettings({
       useAI: els.useAI.checked,
       autoRunTrustedSites: els.autoRunTrustedSites.checked,
       display: {

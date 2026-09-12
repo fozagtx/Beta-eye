@@ -1,8 +1,8 @@
-# See
+# Beta-eye
 
-See is a Chrome MV3 accessibility extension for private, offline-first web text simplification and display customization.
+Beta-eye is a Chrome MV3 accessibility extension for private, offline-first web text simplification and display customization.
 
-The v2 direction is conservative: no external simplification calls, no API keys, no telemetry by default, and no page-content logging. When Chrome's Gemini Nano Prompt API is ready, See can use it locally. When it is unavailable, See uses a deterministic rules fallback.
+The v2 direction is conservative: no external simplification calls, no API keys, no telemetry by default, and no page-content logging. When Chrome's Gemini Nano Prompt API is ready, Beta-eye can use it locally. When it is unavailable, Beta-eye uses a deterministic rules fallback.
 
 ## Current Features
 
@@ -20,9 +20,9 @@ The v2 direction is conservative: no external simplification calls, no API keys,
 
 ## Privacy Model
 
-See processes text locally in the browser. It does not send page content to a server, does not include API keys, and does not collect telemetry. The extension avoids logging prompts and page content.
+Beta-eye processes text locally in the browser. It does not send page content to a server, does not include API keys, and does not collect telemetry. The extension avoids logging prompts and page content.
 
-Chrome's Prompt API and Gemini Nano availability depend on the user's browser channel, flags, model download state, hardware, and Chrome policy. If the local model is unavailable, See falls back to rules mode.
+Chrome's Prompt API and Gemini Nano availability depend on the user's browser channel, flags, model download state, hardware, and Chrome policy. If the local model is unavailable, Beta-eye falls back to rules mode.
 
 ## Install For Local Testing
 
@@ -32,7 +32,7 @@ Chrome's Prompt API and Gemini Nano availability depend on the user's browser ch
 4. Enable Developer mode.
 5. Choose Load unpacked and select `dist/`.
 
-For Gemini Nano testing, use a Chrome version/channel that supports the Prompt API and enable the required Chrome flags. See still works in fallback mode without the model.
+For Gemini Nano testing, use a Chrome version/channel that supports the Prompt API and enable the required Chrome flags. Beta-eye still works in fallback mode without the model.
 
 ## Development
 

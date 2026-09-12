@@ -46,7 +46,7 @@
 
   function renderStatus(nextStatus) {
     if (!activeTab || !/^https?:\/\//.test(activeTab.url || "")) {
-      els.status.textContent = "Open a web page to use See.";
+      els.status.textContent = "Open a web page to use Beta-eye.";
       setActionDisabled(true);
       return;
     }
@@ -180,8 +180,8 @@
   function startProgressPolling() {
     els.progress.hidden = false;
     progressTimer = setInterval(async () => {
-      const data = await chrome.storage.session.get(["see:progress"]);
-      const progress = data["see:progress"];
+      const data = await chrome.storage.session.get(["beta-eye:progress"]);
+      const progress = data["beta-eye:progress"];
       if (!progress) return;
       els.progress.max = progress.total || 1;
       els.progress.value = progress.done || 0;

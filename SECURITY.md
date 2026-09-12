@@ -1,6 +1,6 @@
 # Security Policy
 
-See is designed for local-only text simplification. Please report security issues privately to the project maintainer.
+Beta-eye is designed for local-only text simplification. Please report security issues privately to the project maintainer.
 
 Security-sensitive areas:
 

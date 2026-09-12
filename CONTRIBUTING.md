@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for improving See. Please keep changes aligned with the privacy model:
+Thanks for improving Beta-eye. Please keep changes aligned with the privacy model:
 
 - No external simplification services.
 - No telemetry or tracking by default.

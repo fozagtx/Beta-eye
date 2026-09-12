@@ -1,4 +1,4 @@
-# See v2 Audit
+# Beta-eye v2 Audit
 
 Date: 2026-09-12
 Branch: `main`

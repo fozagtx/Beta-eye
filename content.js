@@ -1,45 +1,45 @@
 (function () {
   "use strict";
 
-  if (window.__seeContentLoaded) return;
-  window.__seeContentLoaded = true;
+  if (window.__betaEyeContentLoaded) return;
+  window.__betaEyeContentLoaded = true;
 
   chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
     (async () => {
       if (request.action === "simplify") {
-        sendResponse(await window.SeeEngine.simplifyPage());
+        sendResponse(await window.BetaEyeEngine.simplifyPage());
         return;
       }
       if (request.action === "restore") {
-        sendResponse(window.SeeEngine.restorePage());
+        sendResponse(window.BetaEyeEngine.restorePage());
         return;
       }
       if (request.action === "cancel") {
-        window.SeeEngine.cancel();
+        window.BetaEyeEngine.cancel();
         sendResponse({ ok: true, state: "cancelled", message: "Cancellation requested." });
         return;
       }
       if (request.action === "speak") {
-        sendResponse(window.SeeEngine.speakSimplifiedText());
+        sendResponse(window.BetaEyeEngine.speakSimplifiedText());
         return;
       }
       if (request.action === "toggleSimplification") {
-        if (window.SeeRenderer.state.simplified) sendResponse(window.SeeEngine.restorePage());
-        else sendResponse(await window.SeeEngine.simplifyPage());
+        if (window.BetaEyeRenderer.state.simplified) sendResponse(window.BetaEyeEngine.restorePage());
+        else sendResponse(await window.BetaEyeEngine.simplifyPage());
         return;
       }
       if (request.action === "applyDisplay") {
-        window.SeeRenderer.applyDisplay(request.settings);
+        window.BetaEyeRenderer.applyDisplay(request.settings);
         sendResponse({ ok: true });
       }
     })().catch((error) => sendResponse({ ok: false, error: error.message }));
     return true;
   });
 
-  window.SeeSettings.getSettings().then((settings) => {
-    const site = window.SeeSettings.getSiteKey(location.href);
+  window.BetaEyeSettings.getSettings().then((settings) => {
+    const site = window.BetaEyeSettings.getSiteKey(location.href);
     if (settings.autoRunTrustedSites && settings.trustedSites.includes(site)) {
-      window.SeeEngine.simplifyPage();
+      window.BetaEyeEngine.simplifyPage();
     }
   });
 })();

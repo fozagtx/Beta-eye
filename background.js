@@ -18,7 +18,7 @@
 
   chrome.runtime.onInstalled.addListener(async ({ reason }) => {
     if (reason === "install") {
-      await chrome.storage.local.set({ "see:onboarded": false });
+      await chrome.storage.local.set({ "beta-eye:onboarded": false });
       await chrome.tabs.create({ url: chrome.runtime.getURL("onboarding.html") });
     }
     await refreshTrustedScripts();
@@ -37,7 +37,7 @@
         sendResponse({ ok: true });
       }
       if (request.action === "saveSettings") {
-        const settings = await globalThis.SeeSettings.saveSettings(request.settings);
+        const settings = await globalThis.BetaEyeSettings.saveSettings(request.settings);
         if ("autoRunTrustedSites" in request.settings || "trustedSites" in request.settings) {
           await refreshTrustedScripts();
         }
@@ -46,14 +46,14 @@
       if (request.action === "requestTrustedSite" && request.origin && request.site) {
         const granted = await chrome.permissions.request({ origins: [`${request.origin}/*`] });
         if (granted) {
-          const settings = await globalThis.SeeSettings.getSettings();
+          const settings = await globalThis.BetaEyeSettings.getSettings();
           const trustedSites = Array.from(new Set([...settings.trustedSites, request.site]));
-          await globalThis.SeeSettings.saveSettings({ trustedSites });
+          await globalThis.BetaEyeSettings.saveSettings({ trustedSites });
           await refreshTrustedScripts();
           sendResponse({
             ok: true,
             granted,
-            settings: await globalThis.SeeSettings.getSettings(),
+            settings: await globalThis.BetaEyeSettings.getSettings(),
           });
           return;
         }
@@ -76,11 +76,11 @@
 
   async function refreshTrustedScripts() {
     await chrome.scripting.unregisterContentScripts().catch(() => undefined);
-    const settings = await globalThis.SeeSettings.getSettings();
+    const settings = await globalThis.BetaEyeSettings.getSettings();
     if (!settings.autoRunTrustedSites || !settings.trustedSites.length) return;
     await chrome.scripting.registerContentScripts([
       {
-        id: "see-trusted-auto-run",
+        id: "beta-eye-trusted-auto-run",
         matches: settings.trustedSites.map((site) => `*://${site}/*`),
         js: CONTENT_FILES,
         css: ["content.css"],
@@ -91,14 +91,14 @@
   }
 
   async function getStatus(url) {
-    const capability = await globalThis.SeeCapability.detect();
-    const settings = await globalThis.SeeSettings.getSettings();
-    const site = globalThis.SeeSettings.getSiteKey(url || "");
+    const capability = await globalThis.BetaEyeCapability.detect();
+    const settings = await globalThis.BetaEyeSettings.getSettings();
+    const site = globalThis.BetaEyeSettings.getSiteKey(url || "");
     const siteDisabled = Boolean(site && settings.disabledSites.includes(site));
     const sensitive =
-      globalThis.SeeSettings.isSensitiveUrl(url || "") &&
+      globalThis.BetaEyeSettings.isSensitiveUrl(url || "") &&
       !settings.allowedSensitiveSites.includes(site);
-    const onboarded = await globalThis.SeeSettings.getOnboardingState();
+    const onboarded = await globalThis.BetaEyeSettings.getOnboardingState();
     return { ok: true, capability, site, siteDisabled, sensitive, settings, onboarded };
   }
 
