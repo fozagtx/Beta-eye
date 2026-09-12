@@ -10,9 +10,14 @@ const files = [
   "options.html",
   "options.css",
   "options.js",
+  "onboarding.html",
+  "onboarding.css",
+  "onboarding.js",
+  "troubleshooting.html",
+  "troubleshooting.css",
   "content.css",
   "LICENSE",
-  "THIRD_PARTY_NOTICES.md"
+  "THIRD_PARTY_NOTICES.md",
 ];
 
 await rm("dist", { recursive: true, force: true });

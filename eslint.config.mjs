@@ -16,20 +16,20 @@ export default [
         module: "readonly",
         globalThis: "readonly",
         TextEncoder: "readonly",
-        importScripts: "readonly"
-      }
+        importScripts: "readonly",
+      },
     },
     rules: {
-      "no-console": ["error", { "allow": ["warn", "error"] }],
-      "no-unused-vars": ["error", { "argsIgnorePattern": "^_", "caughtErrorsIgnorePattern": "^_" }],
-      "no-control-regex": "off"
-    }
+      "no-console": ["error", { allow: ["warn", "error"] }],
+      "no-unused-vars": ["error", { argsIgnorePattern: "^_", caughtErrorsIgnorePattern: "^_" }],
+      "no-control-regex": "off",
+    },
   },
   {
     files: ["eslint.config.mjs", "scripts/**/*.mjs", "tests/**/*.js"],
     languageOptions: {
       sourceType: "module",
-      globals: { ...globals.node, ...globals.vitest }
-    }
-  }
+      globals: { ...globals.node, ...globals.vitest },
+    },
+  },
 ];

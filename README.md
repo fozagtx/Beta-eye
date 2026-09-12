@@ -6,12 +6,16 @@ The v2 direction is conservative: no external simplification calls, no API keys,
 
 ## Current Features
 
-- User-action script injection with `activeTab`; no default all-sites content script.
+- User-action script injection with `activeTab`.
+- Optional trusted-site auto-run after user-approved host permission.
 - Local Gemini Nano Prompt API adapter with rules fallback.
 - Reversible simplification: original text is kept in memory and can be restored.
 - Sensitive-site exclusions for banking, health, government, email, docs editors, and code repos.
 - Profiles for cognitive load, dyslexia, focus, low vision, ESL, and custom use.
-- OpenDyslexic, theme, spacing, reading-width, and focus-ruler display controls.
+- OpenDyslexic, theme, spacing, reading-width, focus-ruler, paragraph pacing, and browser speech controls.
+- First-run onboarding and troubleshooting pages.
+- Progress and cancel controls for page simplification.
+- Safe text-only change highlighting.
 - Versioned prompt builder and cache keys.
 
 ## Privacy Model
@@ -66,13 +70,14 @@ Manual smoke tests:
 4. Click Restore original and confirm original text returns.
 5. Disable the site and confirm simplification controls are blocked.
 6. Change options and confirm display settings apply on the next simplification.
+7. Trust a site and enable auto-run only if you want persistent simplification on that host.
 
 ## Known Limitations
 
 - Restore state is in-memory for the current page session.
 - The fallback mode is deterministic and conservative; it is not as fluent as an available local model.
 - AI responses are rendered as plain text only in this pass.
-- Playwright extension E2E tests are planned but not yet wired.
+- Browser speech uses the local browser speech engine and is capped to the first 4000 characters.
 
 ## Release Process
 
@@ -84,7 +89,7 @@ Manual smoke tests:
 ## Roadmap
 
 - Add Playwright E2E tests with fixture pages.
-- Add persistent user-approved host permissions for trusted sites.
-- Add richer change comparison without injecting HTML.
-- Add cancellation UI for long local model runs.
-- Add an onboarding and troubleshooting page.
+- Add richer readable-content scoring for complex app layouts.
+- Add per-site profile presets.
+- Add stronger dynamic-page restore reconciliation.
+- Add packaged release signing notes.

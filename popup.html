@@ -14,8 +14,16 @@
           <h1 id="title">See</h1>
           <p id="status" role="status">Checking page...</p>
         </div>
-        <button id="openOptions" class="icon-button" type="button" aria-label="Open settings">Settings</button>
+        <button id="openOptions" class="icon-button" type="button" aria-label="Open settings">
+          Settings
+        </button>
       </header>
+
+      <section id="onboardingNotice" class="notice" hidden>
+        <h2>First run</h2>
+        <p>See works locally and falls back safely when Gemini Nano is not ready.</p>
+        <button id="openOnboarding" type="button" class="secondary">Review setup</button>
+      </section>
 
       <section aria-labelledby="profileTitle">
         <h2 id="profileTitle">Reading Profile</h2>
@@ -42,13 +50,29 @@
         <input id="showChanges" type="checkbox" />
         Show changed text with an outline
       </label>
+      <label class="checkbox-row">
+        <input id="autoRunTrustedSites" type="checkbox" />
+        Auto-run on trusted sites
+      </label>
+
+      <progress id="progress" max="1" value="0" hidden></progress>
+      <p id="progressText" class="privacy" aria-live="polite"></p>
 
       <div class="actions">
         <button id="simplify" type="button">Simplify page</button>
         <button id="restore" type="button" class="secondary">Restore original</button>
       </div>
+      <button id="speak" type="button" class="secondary">Speak simplified text</button>
+      <button id="cancel" type="button" class="secondary" hidden>Cancel</button>
 
       <button id="siteToggle" type="button" class="link-button">Disable this site</button>
+      <button id="trustSite" type="button" class="link-button">Trust this site</button>
+      <button id="allowSensitive" type="button" class="link-button" hidden>
+        Allow this sensitive site
+      </button>
+      <a class="help-link" href="troubleshooting.html" target="_blank" rel="noreferrer"
+        >Troubleshooting</a
+      >
       <p class="privacy">Local only. No telemetry. No external simplification calls.</p>
     </main>
     <script src="lib/settings.js"></script>

@@ -6,3 +6,9 @@
 .see-show-changes {
   border-inline-start-color: #2563eb;
 }
+
+.see-change-token {
+  background: #fef08a;
+  color: #111827;
+  padding-inline: 0.08em;
+}

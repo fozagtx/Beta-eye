@@ -20,6 +20,8 @@ npm run build
 6. Click Restore original.
 7. Disable the site and confirm See blocks simplification until re-enabled.
 8. Open options and test OpenDyslexic, focus ruler, theme, spacing, and reading width.
+9. Start simplification on a long article and confirm Cancel stops the active run.
+10. Trust a non-sensitive test site, enable auto-run, reload the page, and confirm simplification starts only on that host.
 
 ## Sensitive-Site Test
 

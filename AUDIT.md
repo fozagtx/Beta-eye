@@ -35,3 +35,11 @@ The inherited MV3 prototype had strong accessibility goals, but the baseline imp
 3. Add deterministic fallback simplification for unsupported Prompt API states.
 4. Reduce default host access by injecting content scripts only after user action.
 5. Replace hardcoded prompts with a versioned prompt module and validate outputs.
+
+## v2.1 Follow-Up Status
+
+- Content logging and dead logger code were removed.
+- Simplification now has text-only rendering, in-memory restore mapping, progress, and cancellation.
+- Prompt API detection degrades to rules fallback.
+- Trusted-site auto-run requires user-approved host permission.
+- First-run onboarding and troubleshooting pages were added.
