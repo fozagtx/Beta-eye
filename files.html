@@ -3,20 +3,61 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Redacto Files</title>
+    <title>Redacto</title>
     <link rel="stylesheet" href="files.css" />
   </head>
   <body>
-    <main>
-      <h1>Redacto Files</h1>
-      <p class="lede">Find private information before you share a file with an AI tool.</p>
-      <label class="dropzone" for="files">
-        <strong>Choose PDF or Excel files</strong>
-        <span>Nothing is uploaded automatically.</span>
-        <input id="files" type="file" accept=".pdf,.xlsx,.csv" multiple />
-      </label>
-      <p id="summary" role="status" aria-live="polite">No files scanned yet.</p>
-      <section id="results" aria-label="Scanned files"></section>
+    <main class="app">
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">R</span><strong>REDACTO</strong>
+        </div>
+        <span class="privacy-badge"><span aria-hidden="true">●</span> CLIENT-SIDE ONLY</span>
+      </header>
+      <section id="emptyState" class="empty-state" aria-labelledby="emptyTitle">
+        <p class="eyebrow">PRIVATE BY DEFAULT</p>
+        <h1 id="emptyTitle">STOP FEEDING<br />YOUR DATA<br />TO <span>AI</span></h1>
+        <p class="intro">
+          Redacto finds private information in your files and removes it before you share them with
+          an AI tool.
+        </p>
+        <label class="dropzone" for="files">
+          <span class="upload-icon" aria-hidden="true">↑</span>
+          <strong>DROP YOUR FILE HERE</strong>
+          <span>or click to browse</span>
+          <small>Supports .txt, .csv, .pdf, .xlsx, .log, .md</small>
+          <input id="files" type="file" accept=".txt,.csv,.pdf,.xlsx,.log,.md" multiple />
+        </label>
+      </section>
+      <section id="resultsState" class="results-state" hidden aria-labelledby="resultsTitle">
+        <div class="results-heading">
+          <div>
+            <p class="eyebrow">LOCAL SCAN COMPLETE</p>
+            <h1 id="resultsTitle">YOUR DATA IS SAFE.</h1>
+            <p id="summary" role="status" aria-live="polite"></p>
+          </div>
+          <div class="metrics" aria-label="Detection summary">
+            <div class="metric lime">
+              <strong id="totalCount">0</strong><span>TOTAL<br />FOUND</span>
+            </div>
+            <div class="metric cyan">
+              <strong id="fileCount">0</strong><span>FILES<br />SCANNED</span>
+            </div>
+          </div>
+        </div>
+        <div class="toolbar">
+          <button id="downloadAll" type="button" class="primary">↓ &nbsp; DOWNLOAD REDACTED</button
+          ><button id="newFile" type="button" class="secondary">↑ &nbsp; NEW FILE</button>
+        </div>
+        <section class="document-panel" aria-labelledby="documentTitle">
+          <div class="panel-heading">
+            <h2 id="documentTitle">REDACTED DOCUMENT</h2>
+            <span id="currentFile"></span>
+          </div>
+          <pre id="preview" tabindex="0"></pre>
+        </section>
+        <section id="fileList" class="file-list" aria-label="Scanned files"></section>
+      </section>
     </main>
     <script type="module" src="files.js"></script>
   </body>
