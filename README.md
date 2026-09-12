@@ -1,30 +1,26 @@
 # Redacto
 
-Redacto is a Chrome MV3 extension that finds confidential data locally before you share text with any LLM.
+Redacto finds private information in text before you share it with an AI tool.
 
-Redacto never uploads page text. It scans locally, replaces detected confidential values with clear markers, and keeps the original page restorable.
+It works on your device. It replaces things like email addresses, phone numbers, card numbers, and access keys with clear markers. You can review the result, copy it, and paste it into any AI tool yourself.
 
-## Current Features
+## What It Does
 
-- User-action script injection with `activeTab`.
-- Optional trusted-site auto-run after user-approved host permission.
-- Local detection for emails, phone numbers, payment cards, government identifiers, tokens, and common API keys.
-- Reversible redaction: original text is kept in memory and can be restored.
-- Sensitive-site exclusions for banking, health, government, email, docs editors, and code repos.
-- Profiles for cognitive load, dyslexia, focus, low vision, ESL, and custom use.
-- OpenDyslexic, theme, spacing, reading-width, focus-ruler, paragraph pacing, and browser speech controls.
-- First-run onboarding and troubleshooting pages.
-- Progress and cancel controls for page scanning.
-- Safe text-only change highlighting.
-- Versioned prompt builder and cache keys.
+- Scans readable text on the current page.
+- Finds common private information locally.
+- Shows redacted text without destroying the original.
+- Lets you restore the original page at any time.
+- Copies only the redacted text for you to review and share.
+- Skips banking, health, email, government, document editor, and code sites by default.
+- Includes readable fonts, contrast, spacing, focus, and speech settings.
 
-## Privacy Model
+## Privacy
 
-Redacto processes page text locally. It does not send page content to a server, store API keys, or collect telemetry. You review the redacted result and choose what to paste into an LLM yourself.
+Redacto does not send your page text anywhere. It has no account, API key, tracking, or automatic upload.
 
 Detection is deterministic and conservative. No automated detector can identify every confidential value, so review the redacted text before sharing it.
 
-## Install For Local Testing
+## Install
 
 1. Run `npm install`.
 2. Run `npm run build`.
@@ -32,7 +28,7 @@ Detection is deterministic and conservative. No automated detector can identify 
 4. Enable Developer mode.
 5. Choose Load unpacked and select `dist/`.
 
-Redacto does not require a model download, Chrome flags, or a network connection.
+Redacto does not require a model download or a network connection.
 
 ## Development
 
@@ -44,31 +40,18 @@ npm run typecheck
 npm run format
 ```
 
-## Architecture
+## For Developers
 
-- `popup.*`: side-panel status, scan, restore, and per-site disable controls.
-- `options.*`: global display and privacy defaults.
-- `background.js`: active-tab injection, command handling, status lookup, settings save.
-- `content.js`: page message bridge.
-- `lib/settings.js`: settings schema, migrations, sensitive-site rules.
-- `lib/redactor.js`: deterministic local confidential-data detector.
-- `lib/chunker.js`: readable-text selector and skip logic.
-- `lib/renderer.js`: text-only rendering and restore mapping.
-- `lib/cache.js`: ephemeral simplification cache.
+- `popup.*`: the Chrome side panel.
+- `background.js` and `content.js`: connect the side panel to the current page.
+- `lib/redactor.js`: local detection rules.
+- `lib/chunker.js`: chooses readable page text.
+- `lib/renderer.js`: redaction and restore behavior.
+- `lib/settings.js`: saved preferences and site exclusions.
 
-## Testing
+## Checks
 
-Unit tests cover confidential-data detection, chunk filtering, sanitizer behavior, and settings migration.
-
-Manual smoke tests:
-
-1. Load `dist/` as an unpacked extension.
-2. Open a normal article page and click Redact page.
-3. Confirm detected emails, phone numbers, cards, and tokens are replaced locally.
-4. Click Restore original and confirm original text returns.
-5. Disable the site and confirm redaction controls are blocked.
-6. Change options and confirm display settings apply on the next scan.
-7. Trust a site and enable auto-run only if you want persistent scanning on that host.
+The automated checks cover confidential-data detection, page selection, sanitization, and saved settings.
 
 ## Known Limitations
 
@@ -77,7 +60,7 @@ Manual smoke tests:
 - Always review the redacted text before sharing it with an LLM.
 - Browser speech uses the local browser speech engine and is capped to the first 4000 characters.
 
-## Release Process
+## Release
 
 1. Update version in `manifest.json` and `package.json`.
 2. Run `npm run lint`, `npm test`, `npm run typecheck`, and `npm run build`.
