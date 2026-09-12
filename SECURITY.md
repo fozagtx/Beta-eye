@@ -4,9 +4,9 @@ Redacto is designed for local-only confidential-data redaction. Please report se
 
 Security-sensitive areas:
 
-- Extension permissions and host access.
-- Prompt/page-content handling.
-- DOM rendering and restore behavior.
-- Sensitive-site exclusions.
+- Extension permissions.
+- File parsing and redaction rules.
+- Downloaded output handling.
+- Privacy and data retention.
 
-Do not add remote code, remote simplification calls, telemetry, or API keys.
+Do not add remote code, telemetry, automatic uploads, or API keys.

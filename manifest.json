@@ -10,24 +10,10 @@
     "48": "images/icon48.png",
     "128": "images/icon128.png"
   },
-  "permissions": ["activeTab", "storage", "scripting", "sidePanel"],
-  "optional_host_permissions": ["http://*/*", "https://*/*"],
+  "permissions": ["sidePanel"],
   "action": { "default_title": "Open Redacto" },
   "side_panel": { "default_path": "files.html" },
   "background": { "service_worker": "background.js" },
-  "commands": {
-    "toggle-redaction": {
-      "suggested_key": { "default": "Alt+Shift+S", "mac": "Alt+Shift+S" },
-      "description": "Toggle redacted and original text on the current page"
-    }
-  },
-  "web_accessible_resources": [
-    {
-      "resources": ["fonts/OpenDyslexic-Regular.woff2"],
-      "matches": ["http://*/*", "https://*/*"]
-    }
-  ],
-  "options_page": "options.html",
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'"
   },

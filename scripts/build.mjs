@@ -7,12 +7,7 @@ const files = [
   "files.html",
   "files.css",
   "files.js",
-  "options.html",
-  "options.css",
-  "options.js",
-  "content.css",
   "LICENSE",
-  "THIRD_PARTY_NOTICES.md",
 ];
 
 await rm("dist", { recursive: true, force: true });
@@ -22,7 +17,7 @@ for (const file of files) {
   if (existsSync(file)) await cp(file, `dist/${file}`, { recursive: true });
 }
 
-for (const dir of ["lib", "fonts", "images"]) {
+for (const dir of ["lib", "images"]) {
   if (existsSync(dir)) await cp(dir, `dist/${dir}`, { recursive: true });
 }
 

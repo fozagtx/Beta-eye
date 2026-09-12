@@ -26,7 +26,7 @@ export default [
     },
   },
   {
-    files: ["eslint.config.mjs", "scripts/**/*.mjs", "tests/**/*.js", "files.js"],
+    files: ["eslint.config.mjs", "scripts/**/*.mjs", "tests/**/*.js", "files.js", "lib/redactor.js"],
     languageOptions: {
       sourceType: "module",
       globals: { ...globals.node, ...globals.vitest, ...globals.browser, ...globals.webextensions },

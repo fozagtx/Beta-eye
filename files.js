@@ -1,18 +1,9 @@
 import { strFromU8, unzipSync } from "./vendor/fflate.mjs";
 import * as pdfjsLib from "./vendor/pdf.mjs";
+import { redact } from "./lib/redactor.js";
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = chrome.runtime.getURL("vendor/pdf.worker.min.mjs");
 
-/** @type {Array<[string, RegExp]>} */
-const rules = [
-  ["secret", /\bsk-or-v1-[A-Za-z0-9_-]{20,}\b/g],
-  ["secret", /\b(?:sk|pk|rk)-[A-Za-z0-9_-]{16,}\b/g],
-  ["secret", /\b(?:ghp|github_pat|xox[baprs]|AIza)[A-Za-z0-9_-]{12,}\b/g],
-  ["email", /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/gi],
-  ["phone", /(?<!\d)(?:\+?\d[\d .()-]{7,}\d)(?!\d)/g],
-  ["ssn", /\b\d{3}-\d{2}-\d{4}\b/g],
-  ["card", /\b(?:\d[ -]*?){13,19}\b/g],
-];
 const state = { results: [] };
 const input = /** @type {HTMLInputElement} */ (document.getElementById("files"));
 input.addEventListener("change", () => scanFiles(Array.from(input.files || [])));
@@ -116,16 +107,6 @@ function parseSharedStrings(entry) {
       .map((text) => text.textContent)
       .join(""),
   );
-}
-function redact(value) {
-  let text = String(value ?? "");
-  let findings = 0;
-  for (const [type, pattern] of rules)
-    text = text.replace(pattern, () => {
-      findings += 1;
-      return `[REDACTED_${type.toUpperCase()}]`;
-    });
-  return { text, findings };
 }
 function csvEscape(value) {
   return `"${String(value).replaceAll('"', '""')}"`;

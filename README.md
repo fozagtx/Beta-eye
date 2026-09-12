@@ -13,8 +13,7 @@ It works on your device. It replaces things like email addresses, phone numbers,
 - Shows the number of private values found in each file.
 - Shows a redacted preview without destroying the original file.
 - Creates downloadable redacted copies for review.
-- Skips banking, health, email, government, document editor, and code sites by default.
-- Includes readable fonts, contrast, spacing, focus, and speech settings.
+- Works entirely on local files before you share them.
 
 ## Privacy
 
@@ -45,22 +44,17 @@ npm run format
 ## For Developers
 
 - `files.*`: the Chrome side panel and file scanning workspace.
-- `background.js` and `content.js`: connect the side panel to the current page.
+- `background.js`: opens the side panel from the toolbar.
 - `lib/redactor.js`: local detection rules.
-- `lib/chunker.js`: chooses readable page text.
-- `lib/renderer.js`: redaction and restore behavior.
-- `lib/settings.js`: saved preferences and site exclusions.
 
 ## Checks
 
-The automated checks cover confidential-data detection, page selection, sanitization, and saved settings.
+The automated checks cover confidential-data detection and safe output handling.
 
 ## Known Limitations
 
-- Restore state is in-memory for the current page session.
 - Detection is deterministic and conservative; it cannot identify every confidential value.
 - Always review the redacted text before sharing it with an LLM.
-- Browser speech uses the local browser speech engine and is capped to the first 4000 characters.
 
 ## Release
 
@@ -72,7 +66,6 @@ The automated checks cover confidential-data detection, page selection, sanitiza
 ## Roadmap
 
 - Add Playwright E2E tests with fixture pages.
-- Add richer readable-content scoring for complex app layouts.
-- Add per-site profile presets.
-- Add stronger dynamic-page restore reconciliation.
-- Add packaged release signing notes.
+- Add OCR for scanned PDFs.
+- Add stronger address and name detection.
+- Preserve more Excel workbook formatting in downloaded files.
